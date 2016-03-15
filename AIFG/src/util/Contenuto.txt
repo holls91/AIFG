@@ -1,0 +1,4 @@
+AIFG_Math:
+	contiene una raccolta di metodi utili nelle diversi classi:
+		double -> Vector2D: new Vector2D(sin(angolo),cos(angolo))
+		Vector2D -> double: il contrario

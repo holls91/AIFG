@@ -1,0 +1,5 @@
+Capitolo 3:
+
+classi:
+	Static: mantiene posizione e orientamento di un Oggetto
+	Vector2D: contiene le coordinate x e z di un Oggetto (la coordinata y corrisponde all'altezza)
