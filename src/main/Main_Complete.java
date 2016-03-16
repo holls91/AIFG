@@ -1,7 +1,14 @@
 package main;
 
 import movement.IDynamicMovement;
+import movement.IKinematicMovement;
 import movement.Static;
+import movement.kinematics.Kinematic;
+import movement.kinematics.KinematicArrive;
+import movement.kinematics.KinematicFlee;
+import movement.kinematics.KinematicSeek;
+import movement.kinematics.KinematicWander;
+
 import movement.dynamics.Align;
 import movement.dynamics.AlignFlee;
 import movement.dynamics.Arrive;
@@ -14,7 +21,6 @@ import movement.dynamics.Reach;
 import movement.dynamics.Seek;
 import movement.dynamics.VelocityMatch;
 import movement.dynamics.Wander2;
-import movement.kinematics.Kinematic;
 
 public class Main_Complete {
 
@@ -45,10 +51,10 @@ public class Main_Complete {
 
 
 			// tutti i costruttori:
-//			IKinematicMovement kinematicarrive = new KinematicArrive(characterS,targetS,maxSpeed,radius,timeToTarget);
-//			IKinematicMovement kinematicflee = new KinematicFlee(characterS,targetS,maxSpeed);
-//			IKinematicMovement kinematicseek = new KinematicSeek(characterS,targetS,maxSpeed);
-//			IKinematicMovement kinematicwander = new KinematicWander(characterS,maxSpeed, maxRotation);
+			IKinematicMovement kinematicarrive = new KinematicArrive(characterS,targetS,maxSpeed,radius,timeToTarget);
+			IKinematicMovement kinematicflee = new KinematicFlee(characterS,targetS,maxSpeed);
+			IKinematicMovement kinematicseek = new KinematicSeek(characterS,targetS,maxSpeed);
+			IKinematicMovement kinematicwander = new KinematicWander(characterS,maxSpeed, maxRotation);
 			IDynamicMovement align = new Align(character,target,maxAngularAcceleration,maxRotation,targetRadius,slowRadius,timeToTarget);
 			IDynamicMovement alignflee = new AlignFlee(character,target,maxAngularAcceleration,maxRotation,targetRadius,slowRadius,timeToTarget);
 			IDynamicMovement arrive = new Arrive(character,target,maxAcceleration,maxSpeed,targetRadius,slowRadius,timeToTarget);
