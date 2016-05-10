@@ -10,9 +10,11 @@ import java.util.Random;
 
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.UtilityClass;
-import movement.dynamics.SteeringOutput;
+
 import movement.vectors.Vector;
 import movement.vectors.Vector2D;
+
+import movement.dynamics.SteeringOutput;
 
 @UtilityClass
 @ExtensionMethod({Math.class,AIFG_Util.class})
@@ -65,6 +67,10 @@ public class AIFG_Util {
 	}
 	public Vector max(Vector a, Vector b) {
 		return a.length()>b.length() ? a : b;
+	}
+	
+	public Double distance(Vector v1, Vector v2){
+		return Math.sqrt(multiplyDot(v1, v2));
 	}
 	
 	public Double length(Vector v) {

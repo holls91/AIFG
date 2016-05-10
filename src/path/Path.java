@@ -1,5 +1,11 @@
 package path;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import util.AIFG_Util;
+import lombok.experimental.ExtensionMethod;
+
 import movement.vectors.Vector;
 
 /**
@@ -7,16 +13,30 @@ import movement.vectors.Vector;
  * @author Emmanuel
  *
  */
+@ExtensionMethod({AIFG_Util.class})
 public class Path implements IPath {
 
+	private List<Vector> nodes;
+	
+	public Path(){
+		nodes = new ArrayList<>();
+	}
+	
 	@Override
-	public Vector getParam(Vector position, Vector lastParam) {
-		return null;
+	public Integer getParam(Integer currParam, Vector position, Vector lastParam) {
+		if(position.distance(lastParam) <= 10 && currParam++ < nodes.size()){
+			return currParam++;
+		}
+		return currParam;
 	}
 
 	@Override
-	public Vector getPosition(Vector param) {
-		return null;
+	public Vector getPosition(Integer param) {
+		return nodes.get(param);
+	}
+	
+	public void addNode(Vector node){
+		nodes.add(node);
 	}
 
 }
