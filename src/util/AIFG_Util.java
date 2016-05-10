@@ -69,8 +69,12 @@ public class AIFG_Util {
 		return a.length()>b.length() ? a : b;
 	}
 	
+//	public Double distance(Vector v1, Vector v2){
+//		return Math.sqrt(multiplyDot(v1, v2));
+//	}
+	
 	public Double distance(Vector v1, Vector v2){
-		return Math.sqrt(multiplyDot(v1, v2));
+		return length(subtract(v1, v2));
 	}
 	
 	public Double length(Vector v) {

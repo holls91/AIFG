@@ -23,10 +23,12 @@ public class Path implements IPath {
 	}
 	
 	@Override
-	public Integer getParam(Integer currParam, Vector position, Vector lastParam) {
-		if(position.distance(lastParam) <= 10 && currParam++ < nodes.size()){
-			return currParam++;
+	public Integer getParam(Integer pathOffset, Integer currParam, Vector position, Vector lastParam) {
+		if(AIFG_Util.distance(position, lastParam) <= 5){
+			System.out.println("Distanza <=5: "+AIFG_Util.distance(position, lastParam));
+			return currParam+pathOffset;
 		}
+		System.out.println("Distanza >5: "+AIFG_Util.distance(position, lastParam));
 		return currParam;
 	}
 
@@ -37,6 +39,10 @@ public class Path implements IPath {
 	
 	public void addNode(Vector node){
 		nodes.add(node);
+	}
+	
+	public List<Vector> getNodes(){
+		return nodes;
 	}
 
 }

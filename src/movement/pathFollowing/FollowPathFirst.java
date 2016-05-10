@@ -33,11 +33,20 @@ public class FollowPathFirst implements IDynamicMovement {
 	
 	public Optional<SteeringOutput> getSteering() {
 //		1. Calculate the target to delegate to face (non "... to seek"?)
-//		Find the current position on the path
-		currentParam = path.getParam(currentParam, seek.getCharacter().getPosition(), path.getPosition(currentParam));
-		
 		// Offset it
-		Integer targetParam = currentParam+pathOffset;// = currentParam.add(pathOffset);
+		Integer targetParam = currentParam;
+		System.out.println(targetParam);
+		
+//		Find the current position on the path
+		currentParam = path.getParam(pathOffset,currentParam, seek.getCharacter().getPosition(), path.getPosition(currentParam));
+		
+		System.out.println(currentParam);
+		
+		if(currentParam >= path.getNodes().size() || currentParam < 0){
+			System.out.println("Sono qui!");
+			pathOffset *= -1;
+			currentParam += pathOffset;
+		}
 		
 		// Get the target position
 		seek.getTarget().setPosition(path.getPosition(targetParam));

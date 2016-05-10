@@ -40,7 +40,7 @@ public class FollowPath implements IDynamicMovement {
 		Vector futurePos = seek.getCharacter().getPosition().add(seek.getCharacter().getVelocity().multiply(predictTime));
 		
 		// Find the current position on the path
-		currentParam = path.getParam(currentParam, futurePos, path.getPosition(currentParam));
+		currentParam = path.getParam(pathOffset, currentParam, futurePos, path.getPosition(currentParam));
 		
 		// Offset it
 		Integer targetParam = currentParam+pathOffset;// = currentParam.add(pathOffset);
