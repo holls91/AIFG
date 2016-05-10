@@ -5,3 +5,5 @@ Java Implementation of the book "Artificial Intelligence For Games"
 
 #DEPENDENCIES
 The project uses the Project Lombok Library. You can find it here: https://projectlombok.org/
+
+This project uses Java 8.
