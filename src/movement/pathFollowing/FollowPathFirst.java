@@ -42,6 +42,7 @@ public class FollowPathFirst implements IDynamicMovement {
 		
 		System.out.println(currentParam);
 		
+		//Piece of code for patrol
 		if(currentParam >= path.getNodes().size() || currentParam < 0){
 			System.out.println("Sono qui!");
 			pathOffset *= -1;
