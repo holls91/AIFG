@@ -58,6 +58,10 @@ public class AIFG_Util {
 		return v.multiply(1/x);
 	}
 	
+	public Double squareMagnitude(Vector v){
+		return v.multiplyDot(v);
+	}
+	
 //	public Double length(Vector v) {
 //		return multiplyDot(v,v);
 //	}
