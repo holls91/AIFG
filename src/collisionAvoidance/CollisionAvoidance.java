@@ -3,16 +3,14 @@ package collisionAvoidance;
 import java.util.List;
 import java.util.Optional;
 
-import util.AIFG_Util;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.ExtensionMethod;
-
 import movement.IDynamicMovement;
+import movement.dynamics.SteeringOutput;
 import movement.kinematics.Kinematic;
 import movement.vectors.Vector;
-
-import movement.dynamics.SteeringOutput;
+import util.AIFG_Util;
 
 @AllArgsConstructor
 @Data
@@ -53,7 +51,7 @@ public class CollisionAvoidance implements IDynamicMovement {
 			relativePos = target.getPosition()
 					.subtract(character.getPosition());
 			relativeVel = target.getVelocity()
-					.subtract(character.getPosition());
+					.subtract(character.getVelocity());
 			relativeSpeed = relativeVel.length();
 			timeToCollision = (relativePos.multiplyDot(relativeVel))
 					/ (relativeSpeed * relativeSpeed);
@@ -72,6 +70,7 @@ public class CollisionAvoidance implements IDynamicMovement {
 				// Store the time, target and other data
 				shortestTime = timeToCollision;
 				firstTarget = target;
+//System.out.println("FirstTarget aggiornato: "+firstTarget);
 				firstMinSeparation = minSeparation;
 				firstDistance = distance;
 				firstRelativePosition = relativePos;

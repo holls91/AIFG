@@ -3,10 +3,9 @@ package path;
 import java.util.ArrayList;
 import java.util.List;
 
-import util.AIFG_Util;
 import lombok.experimental.ExtensionMethod;
-
 import movement.vectors.Vector;
+import util.AIFG_Util;
 
 /**
  * Consigliabile implementare il Path come un insieme di segmenti
@@ -25,10 +24,10 @@ public class Path implements IPath {
 	@Override
 	public Integer getParam(Integer pathOffset, Integer currParam, Vector position, Vector lastParam) {
 		if(AIFG_Util.distance(position, lastParam) <= 5){
-			System.out.println("Distanza <=5: "+AIFG_Util.distance(position, lastParam));
+//System.out.println("Distanza <=5: "+AIFG_Util.distance(position, lastParam));
 			return currParam+pathOffset;
 		}
-		System.out.println("Distanza >5: "+AIFG_Util.distance(position, lastParam));
+//System.out.println("Distanza >5: "+AIFG_Util.distance(position, lastParam));
 		return currParam;
 	}
 

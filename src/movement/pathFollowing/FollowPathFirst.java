@@ -2,16 +2,14 @@ package movement.pathFollowing;
 
 import java.util.Optional;
 
-import path.IPath;
-import util.AIFG_Util;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.ExtensionMethod;
-
 import movement.IDynamicMovement;
-
 import movement.dynamics.Seek;
 import movement.dynamics.SteeringOutput;
+import path.IPath;
+import util.AIFG_Util;
 
 @Data
 @AllArgsConstructor
@@ -35,16 +33,16 @@ public class FollowPathFirst implements IDynamicMovement {
 //		1. Calculate the target to delegate to face (non "... to seek"?)
 		// Offset it
 		Integer targetParam = currentParam;
-		System.out.println(targetParam);
+//System.out.println(targetParam);
 		
 //		Find the current position on the path
 		currentParam = path.getParam(pathOffset,currentParam, seek.getCharacter().getPosition(), path.getPosition(currentParam));
 		
-		System.out.println(currentParam);
+//System.out.println(currentParam);
 		
 		//Piece of code for patrol
 		if(currentParam >= path.getNodes().size() || currentParam < 0){
-			System.out.println("Sono qui!");
+//System.out.println("Sono qui!");
 			pathOffset *= -1;
 			currentParam += pathOffset;
 		}

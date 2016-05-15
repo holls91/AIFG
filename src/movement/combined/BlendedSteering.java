@@ -22,17 +22,21 @@ public class BlendedSteering {
 	public Optional<SteeringOutput> getSteering() {
 		
 		double totalWeight = 0, angular = 0;
-		SteeringOutput temp = null;
+		Optional<SteeringOutput> temp = null;
+		SteeringOutput steering = null;
 		Vector linear = null;
 		
 		for(BehaviorAndWeight behavior : behaviors){
-			temp = behavior.behavior.getSteering().get();
-			linear = temp.getLinear();
-			angular = temp.getAngular();
-			linear = AIFG_Util.add(linear, AIFG_Util.multiply(linear,behavior.weight));
-			angular += angular * behavior.weight;
-			
-			totalWeight += behavior.weight;
+			temp = behavior.behavior.getSteering();
+			if(temp.isPresent()){
+				steering = temp.get();
+				linear = steering.getLinear();	
+				angular = steering.getAngular();
+				linear = AIFG_Util.add(linear, AIFG_Util.multiply(linear,behavior.weight));
+				angular += angular * behavior.weight;
+				
+				totalWeight += behavior.weight;
+			}
 		}
 		
 		if(totalWeight > 0.0){
@@ -45,7 +49,7 @@ public class BlendedSteering {
 	
 	@Data
 	@AllArgsConstructor
-	class BehaviorAndWeight{
+	public static class BehaviorAndWeight{
 		IDynamicMovement behavior;
 		double weight;
 	}
