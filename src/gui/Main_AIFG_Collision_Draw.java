@@ -27,7 +27,7 @@ public class Main_AIFG_Collision_Draw implements DrawListener {
     }
     
     public void run() {
-        Kinematic character = new Kinematic(new Vector(1.0, 0.0), 3.0, new Vector(0.2,0.2), 1.0);
+        Kinematic character = new Kinematic(new Vector(0.0, 0.0), 3.0, new Vector(0.2,0.2), 1.0);
         
         List<Kinematic> targets = new ArrayList<Kinematic>() {{
         	//add(new Kinematic(new Vector(5, 0.0), 0.0, new Vector(0.0,0.0), 0.0));

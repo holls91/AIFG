@@ -70,7 +70,7 @@ public class CollisionAvoidance implements IDynamicMovement {
 				// Store the time, target and other data
 				shortestTime = timeToCollision;
 				firstTarget = target;
-System.out.println("FirstTarget aggiornato: "+firstTarget);
+//System.out.println("FirstTarget aggiornato: "+firstTarget);
 				firstMinSeparation = minSeparation;
 				firstDistance = distance;
 				firstRelativePosition = relativePos;
