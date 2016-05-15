@@ -31,13 +31,13 @@ public class Main_AIFG_Collision_Draw implements DrawListener {
         
         List<Kinematic> targets = new ArrayList<Kinematic>() {{
         	//add(new Kinematic(new Vector(5, 0.0), 0.0, new Vector(0.0,0.0), 0.0));
-        	add(new Kinematic(new Vector(0, 10), 0.0, new Vector(0.3,0.3), 0.0));
-        	add(new Kinematic(new Vector(10,10), 0.0, new Vector(0.3,0.3), 0.0));
-        	add(new Kinematic(new Vector(20,20), 0.0, new Vector(0.3,0.3), 0.0));
-        	add(new Kinematic(new Vector(20,0), 0.0, new Vector(0.3,0.3), 0.0));
+        	add(new Kinematic(new Vector(0, 10), 0.0, new Vector(0.0,0.0), 0.0));
+        	add(new Kinematic(new Vector(5,5), 0.0, new Vector(0.0,0.0), 0.0));
+        	add(new Kinematic(new Vector(7,17), 0.0, new Vector(0.0,0.0), 0.0));
+        	add(new Kinematic(new Vector(20,6), 0.0, new Vector(0.0,0.0), 0.0));
         }};
     	
-        CollisionAvoidance ca = new CollisionAvoidance(character,0.15, targets,10.0);
+        CollisionAvoidance ca = new CollisionAvoidance(character,0.15, targets,2.5);
     	
     	draw.setPenColor(Draw.RED);
     	for(Kinematic k: targets) {
@@ -46,18 +46,14 @@ public class Main_AIFG_Collision_Draw implements DrawListener {
     	
     	for(int i=0; i>=0; i++){
     		Optional<SteeringOutput> steering = ca.getSteering();
-    		if(steering.isPresent()){
-    			character.update(steering.get(), 0.7, 0.65);
+//    		if(steering.isPresent()){
+    			character.update(steering.orElse(new SteeringOutput(new Vector(Math.random()+1,Math.random()+1), 0)), 0.7, .65);
     			draw.setPenColor(Draw.GREEN);
     			draw.filledCircle(character.getPosition().getDoubleX(),character.getPosition().getDoubleZ(),1);
     			System.out.println("Character: "+character.getPosition()+" - Velocity: "+character.getVelocity());
 //    			System.out.println("Target: "+ca.getPath().getPosition(ca.getCurrentParam()));	
-    		}
-    		else{
-    			System.out.println("Target raggiunto!");
-    			break;
-    		}
-    		draw.show(25);
+//    		}
+    		draw.show(60);
     		draw.setPenColor(Draw.WHITE);
     		draw.filledCircle(character.getPosition().getDoubleX(),character.getPosition().getDoubleZ(),1.1);
     		draw.setPenColor(Draw.RED);
