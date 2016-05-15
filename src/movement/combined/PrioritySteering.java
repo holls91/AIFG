@@ -23,9 +23,10 @@ public class PrioritySteering {
 		for(BlendedSteering group : groups){
 			temp = group.getSteering().get();
 			
-			//Check if we're above the threshold, if so return
-			if(AIFG_Util.length(temp.getLinear()) > epsilon || Math.abs(temp.getAngular()) > epsilon)
-				return temp.asOptional();	
+			if(temp.getLinear() != null)
+				//Check if we're above the threshold, if so return
+				if(AIFG_Util.length(temp.getLinear()) > epsilon || Math.abs(temp.getAngular()) > epsilon)
+					return temp.asOptional();	
 		}
 		
 		//If we got here, it means that no group had a large enough acceleration, so return
