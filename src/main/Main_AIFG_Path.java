@@ -2,14 +2,12 @@ package main;
 
 import java.util.Optional;
 
-import path.Path;
-
+import movement.dynamics.Seek;
+import movement.dynamics.SteeringOutput;
 import movement.kinematics.Kinematic;
 import movement.pathFollowing.FollowPathFirst;
 import movement.vectors.Vector;
-
-import movement.dynamics.Seek;
-import movement.dynamics.SteeringOutput;
+import path.Path;
 
 public class Main_AIFG_Path {
 
