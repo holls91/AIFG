@@ -15,11 +15,6 @@ import collisionAvoidance.CollisionAvoidance;
 public class MainTest {
 
 	public static void main(String[] args) {
-		GUI_Manager gm = new GUI_Manager();
-		gm.setCanvasSize(512,512);
-		gm.setXscale(-5,25);
-		gm.setYscale(-5,25);
-
 		Kinematic character = new Kinematic(new Vector(0.0, 0.0), 3.0, new Vector(0.2,0.2), 1.0);
 		Kinematic target = new Kinematic(new Vector(15.0, 5.0), 0.0, new Vector(0.0,0.0), 0.0);
 
@@ -43,10 +38,11 @@ public class MainTest {
     	
         IDynamicMovement ca = new CollisionAvoidance(character,0.15, targets,2.5);
 
-    	gm.setCharacter(character);
-    	gm.setMovement(fpf);	// per FollowPath
-//    	gm.setMovement(ca);	// per CollisionAvoidance
-    	gm.setTarget(target);
+        GUI_Manager gm = new GUI_Manager(character,fpf,target);	// per FollowPath
+//      GUI_Manager gm = new GUI_Manager(character,ca,target);	// per CollisionAvoidance
+        gm.setCanvasSize(512,512);
+        gm.setXscale(-5,25);
+        gm.setYscale(-5,25);
     	gm.setExtraObject(path.getNodes().toArray());	// par FollowPath
     	// gm.setExtraObject(targets.toArray());	// per CollisionAvoidance
     	gm.run();	// loop infinito

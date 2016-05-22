@@ -53,7 +53,7 @@ public class Main_AIFG_Collision_Draw implements DrawListener {
     			System.out.println("Character: "+character.getPosition()+" - Velocity: "+character.getVelocity());
 //    			System.out.println("Target: "+ca.getPath().getPosition(ca.getCurrentParam()));	
 //    		}
-    		draw.show(60);
+    		draw.show(1000);
     		draw.setPenColor(Draw.WHITE);
     		draw.filledCircle(character.getPosition().getDoubleX(),character.getPosition().getDoubleZ(),1.1);
     		draw.setPenColor(Draw.RED);
