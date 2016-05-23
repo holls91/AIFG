@@ -3,13 +3,15 @@ package gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import path.Path;
+import collisionAvoidance.CollisionAvoidance;
+
 import movement.IDynamicMovement;
-import movement.dynamics.Seek;
 import movement.kinematics.Kinematic;
 import movement.pathFollowing.FollowPathFirst;
 import movement.vectors.Vector;
-import path.Path;
-import collisionAvoidance.CollisionAvoidance;
+
+import movement.dynamics.Seek;
 
 
 public class MainTest {

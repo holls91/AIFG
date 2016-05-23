@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import movement.dynamics.SteeringOutput;
+import collisionAvoidance.CollisionAvoidance;
+
 import movement.kinematics.Kinematic;
 import movement.vectors.Vector;
-import collisionAvoidance.CollisionAvoidance;
+
+import movement.dynamics.SteeringOutput;
 
 public class Main_AIFG_Collision_Draw implements DrawListener {
 
