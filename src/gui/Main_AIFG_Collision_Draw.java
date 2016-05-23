@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import movement.dynamics.SteeringOutput;
+import collisionAvoidance.CollisionAvoidance;
+
 import movement.kinematics.Kinematic;
 import movement.vectors.Vector;
-import collisionAvoidance.CollisionAvoidance;
+
+import movement.dynamics.SteeringOutput;
 
 public class Main_AIFG_Collision_Draw implements DrawListener {
 
@@ -53,7 +55,7 @@ public class Main_AIFG_Collision_Draw implements DrawListener {
     			System.out.println("Character: "+character.getPosition()+" - Velocity: "+character.getVelocity());
 //    			System.out.println("Target: "+ca.getPath().getPosition(ca.getCurrentParam()));	
 //    		}
-    		draw.show(60);
+    		draw.show(1000);
     		draw.setPenColor(Draw.WHITE);
     		draw.filledCircle(character.getPosition().getDoubleX(),character.getPosition().getDoubleZ(),1.1);
     		draw.setPenColor(Draw.RED);

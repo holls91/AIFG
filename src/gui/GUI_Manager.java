@@ -1,8 +1,12 @@
 package gui;
 
 import gui.util.Draw;
+import gui.util.DrawListener;
 
 import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 
 import movement.IDynamicMovement;
@@ -12,27 +16,41 @@ import movement.vectors.Vector;
 
 public class GUI_Manager {
 
+	private Map<Kinematic, IDynamicMovement> map;
+	
 	private Kinematic character;
 	private IDynamicMovement movement;
 	private Kinematic target;
 	
 	private Draw draw;
+	private double timeUpdate = 0.65;
+	private double maxSpeedCharacter = 0.5;
+	private int refresh = 25;
 	
 	private long endOfExecution;
 	
 	private Object[] extraDraw;
 	
 	
-	public GUI_Manager(){;
+	public GUI_Manager(){
 		init();
+	}
+	public GUI_Manager(Kinematic character, IDynamicMovement movement) {
+//		this.character = character;
+//		this.movement = movement;
+		init();
+		map.put(character,movement);
 	}
 	public GUI_Manager(Kinematic character, IDynamicMovement movement, Kinematic target) {
-		this.character = character;
-		this.movement = movement;
-		this.target = target;
+//		this.character = character;
+//		this.movement = movement;
+//		this.target = target;
 		init();
+		map.put(character,movement);
+		setTarget(target);
 	}
 	private void init() {
+		map = new HashMap<>();
 		draw = new Draw();
 		draw.xorOn();
 		draw.setCanvasSize(512,512);
@@ -56,15 +74,18 @@ public class GUI_Manager {
 		draw.setYscale(min,max);
 	}
 
-	public Kinematic setCharacter(Kinematic character) {
-		Kinematic old = this.character;
-		this.character = character;
-		return old;
-	}
-	public IDynamicMovement setMovement(IDynamicMovement movement) {
-		IDynamicMovement old = this.movement;
-		this.movement = movement;
-		return old;
+//	public Kinematic setCharacter(Kinematic character) {
+//		Kinematic old = this.character;
+//		this.character = character;
+//		return old;
+//	}
+//	public IDynamicMovement setMovement(IDynamicMovement movement) {
+//		IDynamicMovement old = this.movement;
+//		this.movement = movement;
+//		return old;
+//	}
+	public void add(Kinematic character, IDynamicMovement movement) {
+		map.put(character,movement);
 	}
 	public Kinematic setTarget(Kinematic target) {
 		Kinematic old = this.target;
@@ -72,6 +93,20 @@ public class GUI_Manager {
 		return old;
 	}
 	
+	public void addListener(DrawListener listener) {
+		draw.addListener(listener);
+	}
+	
+	public void setTimeUpdate(double time) {
+		this.timeUpdate = time;
+	}
+	public void setMaxSpeedCharacter(double maxSpeed) {
+		this.maxSpeedCharacter = maxSpeed;
+	}
+	
+	public void setRefresh(int refreshMs) {
+		this.refresh = refreshMs;
+	}
 	public void setExtraObject(Object... extraDraw) {
 		this.extraDraw = extraDraw;
 	}
@@ -81,15 +116,18 @@ public class GUI_Manager {
 			draw.clear();
 			drawTarget();
     		drawExtra();
-    		Optional<SteeringOutput> steering = movement.getSteering();
-    		if(steering.isPresent()) {
-    			character.update(steering.get(), 0.7, 0.65);
-    			drawCharacter();
+    		for(Entry<Kinematic,IDynamicMovement> e : map.entrySet()) {
+        		Optional<SteeringOutput> steering = e.getValue().getSteering();
+        		if(steering.isPresent()) {
+        			e.getKey().update(steering.get(), maxSpeedCharacter, timeUpdate);
+        		}
+        		else {
+    //    			System.out.println("No steering found");
+    //    			character.update(new SteeringOutput(new Vector(Math.random()-1,Math.random()-1),Math.random()-1),0.7,0.65);
+        		}
+        		drawCharacter(e.getKey());
     		}
-    		else {
-    			character.update(new SteeringOutput(new Vector(Math.random()-1,Math.random()-1),Math.random()-1),0.7,0.65);
-    		}
-    		draw.show(25);
+    		draw.show(refresh);
 		} while(System.currentTimeMillis()<endOfExecution);
 	}
 	public void run(long ms) {
@@ -97,7 +135,7 @@ public class GUI_Manager {
 		run();
 	}
 
-	private void drawCharacter() {
+	private void drawCharacter(Kinematic character) {
 //System.out.println("Disegno Character");
 		draw(character,Draw.GREEN,1);
 	}
@@ -119,7 +157,7 @@ public class GUI_Manager {
 		draw.filledCircle(v.getDoubleX(),v.getDoubleZ(),size);
 	}
 
-	public void drawExtra() {
+	private void drawExtra() {
 		for(Object obj : extraDraw) {
 			if(obj instanceof Kinematic)
 				draw((Kinematic)obj,Draw.BLUE,0.5);

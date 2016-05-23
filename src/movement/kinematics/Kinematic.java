@@ -1,13 +1,11 @@
 package movement.kinematics;
 
-import util.AIFG_Util;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.ExtensionMethod;
-
-import movement.vectors.Vector;
-
 import movement.dynamics.SteeringOutput;
+import movement.vectors.Vector;
+import util.AIFG_Util;
 
 @Data
 @AllArgsConstructor
@@ -31,7 +29,7 @@ public class Kinematic {
 
 	public void update(SteeringOutput steering, double maxSpeed, double time) {
 		if(steering != null){
-			System.out.println(steering);
+//			System.out.println(steering);
 	//		Update the position and orientation
 			position = position.add(velocity.multiply(time));
 			orientation += rotation*time;
