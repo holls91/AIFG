@@ -796,7 +796,7 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
     ***************************************************************************/
 
     // get an image from the given filename
-    private Image getImage(String filename) {
+    public Image getImage(String filename) {
 
         // to read from file
         ImageIcon icon = new ImageIcon(filename);
@@ -852,20 +852,20 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * @param  degrees is the number of degrees to rotate counterclockwise
      * @throws IllegalArgumentException if the image is corrupt
      */
-    public void picture(double x, double y, String s, double degrees) {
-        Image image = getImage(s);
-        double xs = scaleX(x);
-        double ys = scaleY(y);
-        int ws = image.getWidth(null);
-        int hs = image.getHeight(null);
-        if (ws < 0 || hs < 0) throw new IllegalArgumentException("image " + s + " is corrupt");
-
-        offscreen.rotate(Math.toRadians(-degrees), xs, ys);
-        offscreen.drawImage(image, (int) Math.round(xs - ws/2.0), (int) Math.round(ys - hs/2.0), null);
-        offscreen.rotate(Math.toRadians(+degrees), xs, ys);
-
-        draw();
-    }
+//    public void picture(double x, double y, String s, double degrees) {
+//        Image image = getImage(s);
+//        double xs = scaleX(x);
+//        double ys = scaleY(y);
+//        int ws = image.getWidth(null);
+//        int hs = image.getHeight(null);
+//        if (ws < 0 || hs < 0) throw new IllegalArgumentException("image " + s + " is corrupt");
+//
+//        offscreen.rotate(Math.toRadians(-degrees), xs, ys);
+//        offscreen.drawImage(image, (int) Math.round(xs - ws/2.0), (int) Math.round(ys - hs/2.0), null);
+//        offscreen.rotate(Math.toRadians(+degrees), xs, ys);
+//
+//        draw();
+//    }
 
     /**
      * Draws picture (gif, jpg, or png) centered on (x, y), rescaled to w-by-h.
@@ -1344,5 +1344,112 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
         draw2.setPenColor(Draw.WHITE);
         draw2.text(0.8, 0.8, "white text");
     }
+    
+    /***************************************************************************
+     *  Additional methods.
+     ***************************************************************************/
+
+    public Image getImageObj(String s) {
+      return getImage(s);
+    }
+    
+     /**
+      * Draws picture (gif, jpg, or png) centered on (x, y).
+      *
+      * @param  x the center x-coordinate of the image
+      * @param  y the center y-coordinate of the image
+      * @param  s the name of the image/picture, e.g., "ball.gif"
+      * @throws IllegalArgumentException if the image is corrupt
+      */
+     public void picture(double x, double y, Image image) {
+         double xs = scaleX(x);
+         double ys = scaleY(y);
+         int ws = image.getWidth(null);
+         int hs = image.getHeight(null);
+         if (ws < 0 || hs < 0) throw new IllegalArgumentException("image is corrupt");
+
+         offscreen.drawImage(image, (int) Math.round(xs - ws/2.0), (int) Math.round(ys - hs/2.0), null);
+         draw();
+     }
+
+     /**
+      * Draws picture (gif, jpg, or png) centered on (x, y),
+      * rotated given number of degrees.
+      *
+      * @param  x the center x-coordinate of the image
+      * @param  y the center y-coordinate of the image
+      * @param  s the name of the image/picture, e.g., "ball.gif"
+      * @param  degrees is the number of degrees to rotate counterclockwise
+      * @throws IllegalArgumentException if the image is corrupt
+      */
+     public void picture(double x, double y, Image image, double degrees) {
+         double xs = scaleX(x);
+         double ys = scaleY(y);
+         int ws = image.getWidth(null);
+         int hs = image.getHeight(null);
+         if (ws < 0 || hs < 0) throw new IllegalArgumentException("image is corrupt");
+
+         offscreen.rotate(Math.toRadians(-degrees), xs, ys);
+         offscreen.drawImage(image, (int) Math.round(xs - ws/2.0), (int) Math.round(ys - hs/2.0), null);
+         offscreen.rotate(Math.toRadians(+degrees), xs, ys);
+
+         draw();
+     }
+
+     /**
+      * Draws picture (gif, jpg, or png) centered on (x, y), rescaled to w-by-h.
+      *
+      * @param  x the center x coordinate of the image
+      * @param  y the center y coordinate of the image
+      * @param  s the name of the image/picture, e.g., "ball.gif"
+      * @param  w the width of the image
+      * @param  h the height of the image
+      * @throws IllegalArgumentException if the image is corrupt
+      */
+     public void picture(double x, double y, Image image, double w, double h) {
+         double xs = scaleX(x);
+         double ys = scaleY(y);
+         double ws = factorX(w);
+         double hs = factorY(h);
+         if (ws < 0 || hs < 0) throw new IllegalArgumentException("image is corrupt");
+         if (ws <= 1 && hs <= 1) pixel(x, y);
+         else {
+             offscreen.drawImage(image, (int) Math.round(xs - ws/2.0),
+                                        (int) Math.round(ys - hs/2.0),
+                                        (int) Math.round(ws),
+                                        (int) Math.round(hs), null);
+         }
+         draw();
+     }
+
+
+     /**
+      * Draws picture (gif, jpg, or png) centered on (x, y), rotated
+      * given number of degrees, rescaled to w-by-h.
+      *
+      * @param  x the center x-coordinate of the image
+      * @param  y the center y-coordinate of the image
+      * @param  s the name of the image/picture, e.g., "ball.gif"
+      * @param  w the width of the image
+      * @param  h the height of the image
+      * @param  degrees is the number of degrees to rotate counterclockwise
+      * @throws IllegalArgumentException if the image is corrupt
+      */
+     public void picture(double x, double y, Image image, double w, double h, double degrees) {
+         double xs = scaleX(x);
+         double ys = scaleY(y);
+         double ws = factorX(w);
+         double hs = factorY(h);
+         if (ws < 0 || hs < 0) throw new IllegalArgumentException("image is corrupt");
+         if (ws <= 1 && hs <= 1) pixel(x, y);
+         offscreen.rotate(Math.toRadians(-degrees), xs, ys);
+         offscreen.drawImage(image, (int) Math.round(xs - ws/2.0),
+                                    (int) Math.round(ys - hs/2.0),
+                                    (int) Math.round(ws),
+                                    (int) Math.round(hs), null);
+         offscreen.rotate(Math.toRadians(+degrees), xs, ys);
+
+         draw();
+     }
 
 }

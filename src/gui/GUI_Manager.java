@@ -4,15 +4,17 @@ import gui.util.Draw;
 import gui.util.DrawListener;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
 import movement.IDynamicMovement;
-import movement.dynamics.SteeringOutput;
 import movement.kinematics.Kinematic;
 import movement.vectors.Vector;
+
+import movement.dynamics.SteeringOutput;
 
 public class GUI_Manager {
 
@@ -149,7 +151,9 @@ public class GUI_Manager {
 	}
 	private void draw(Kinematic k, Color c, double size) {
 		draw.setPenColor(c);
-		draw.filledCircle(k.getPosition().getDoubleX(),k.getPosition().getDoubleZ(),size);		
+		Image image = draw.getImage("sprite\\chocobo.gif");
+		draw.picture(k.getPosition().getDoubleX(), k.getPosition().getDoubleZ(), image, Math.toRadians(k.getOrientation()));
+		//draw.filledCircle(k.getPosition().getDoubleX(),k.getPosition().getDoubleZ(),size);		
 	}
 	private void draw(Vector v, Color c, double size) {
 //System.out.println("Disegno Vector");

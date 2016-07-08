@@ -49,9 +49,7 @@ public class Main_AIFG_Blended_Draw implements DrawListener {
     	
     	BehaviorAndWeight baw1 = new BehaviorAndWeight(arrive,1);
     	BehaviorAndWeight baw2 = new BehaviorAndWeight(ca, 2);
-    	BehaviorAndWeight[] behaviors = new BehaviorAndWeight[2];
-    	behaviors[0] = baw1;
-    	behaviors[1] = baw2;
+    	BehaviorAndWeight[] behaviors = new BehaviorAndWeight[]{baw1,baw2};
     	
     	
     	BlendedSteering blended = new BlendedSteering(behaviors);

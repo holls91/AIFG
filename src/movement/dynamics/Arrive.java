@@ -2,13 +2,14 @@ package movement.dynamics;
 
 import java.util.Optional;
 
+import util.AIFG_Util;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.ExtensionMethod;
+
 import movement.IDynamicMovement;
 import movement.kinematics.Kinematic;
 import movement.vectors.Vector;
-import util.AIFG_Util;
 
 @Data
 @AllArgsConstructor
