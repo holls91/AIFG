@@ -1,13 +1,8 @@
 package gui;
 
-import gui.util.Draw;
-import gui.util.DrawListener;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import collisionAvoidance.CollisionAvoidance;
 
 import movement.combined.BlendedSteering;
 import movement.combined.BlendedSteering.BehaviorAndWeight;
@@ -16,6 +11,10 @@ import movement.vectors.Vector;
 
 import movement.dynamics.Arrive;
 import movement.dynamics.SteeringOutput;
+
+import collisionAvoidance.CollisionAvoidance;
+import gui.util.Draw;
+import gui.util.DrawListener;
 
 public class Main_AIFG_Blended_Draw implements DrawListener {
 	private static int SIZE = 512;
@@ -32,7 +31,7 @@ public class Main_AIFG_Blended_Draw implements DrawListener {
     
     public void run() {
     	
-        Kinematic character = new Kinematic(new Vector(0.0, 0.0), 3.0, new Vector(0.2,0.2), 1.0);
+        Kinematic character = new Kinematic(new Vector(0.0, 0.0), 0.0, new Vector(0.2,0.2), 0.0);
     	Kinematic target = new Kinematic(new Vector(10.0, 10.0), 0.0, new Vector(0.0,0.0), 0.0);
     	
         List<Kinematic> obstacles = new ArrayList<Kinematic>() {{
@@ -43,8 +42,8 @@ public class Main_AIFG_Blended_Draw implements DrawListener {
         	add(new Kinematic(new Vector(20,6), 0.0, new Vector(0.3,0.3), 0.0));
         }};
     	
-    	Arrive arrive = new Arrive(character, target, 0.15, 0.40, 0.01, 0.75, 0.03);
-    	CollisionAvoidance ca = new CollisionAvoidance(character,0.15,obstacles,2.0);
+    	Arrive arrive = new Arrive(character, target, 0.15, 0.25, 1, 1, 0.7);
+    	CollisionAvoidance ca = new CollisionAvoidance(character,0.15,obstacles,1.0);
     	
     	
     	BehaviorAndWeight baw1 = new BehaviorAndWeight(arrive,1);
@@ -66,17 +65,17 @@ public class Main_AIFG_Blended_Draw implements DrawListener {
     	draw.setPenColor(Draw.GREEN);
     	for(int i=0; i>=0; i++){
     		Optional<SteeringOutput> steering = blended.getSteering();
-    		if(steering.isPresent() && steering.get().getLinear() != null){
-    			character.update(steering.get(), 0.7, 0.65);
+//    		if(steering.isPresent() && steering.get().getLinear() != null){
+    			character.update(steering.orElse(new SteeringOutput(new Vector(Math.random(),Math.random()), 0)), 0.35, .65);
     			draw.setPenColor(Draw.GREEN);
     			draw.filledCircle(character.getPosition().getDoubleX(),character.getPosition().getDoubleZ(),1);
 //    			System.out.println("Character: "+character.getPosition()+" - Velocity: "+character.getVelocity());
 //    			System.out.println("Target: "+fpf.getPath().getPosition(fpf.getCurrentParam()));	
-    		}
-    		else{
-//    			System.out.println("Target raggiunto!");
-    			break;
-    		}
+//    		}
+//    		else{
+////    			System.out.println("Target raggiunto!");
+//    			break;
+//    		}
     		draw.show(25);
     		draw.setPenColor(Draw.WHITE);
     		draw.filledCircle(character.getPosition().getDoubleX(),character.getPosition().getDoubleZ(),1.1);

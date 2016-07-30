@@ -1,13 +1,8 @@
 package gui;
 
-import gui.util.Draw;
-import gui.util.DrawListener;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import collisionAvoidance.CollisionAvoidance;
 
 import movement.combined.BlendedSteering;
 import movement.combined.BlendedSteering.BehaviorAndWeight;
@@ -17,6 +12,10 @@ import movement.vectors.Vector;
 
 import movement.dynamics.Arrive;
 import movement.dynamics.SteeringOutput;
+
+import collisionAvoidance.CollisionAvoidance;
+import gui.util.Draw;
+import gui.util.DrawListener;
 
 public class Main_AIFG_Priority_Draw implements DrawListener {
 	private static int SIZE = 512;
@@ -33,7 +32,7 @@ public class Main_AIFG_Priority_Draw implements DrawListener {
     
     public void run() {
     	
-        Kinematic character = new Kinematic(new Vector(0.0, 0.0), 3.0, new Vector(0.2,0.2), 1.0);
+        Kinematic character = new Kinematic(new Vector(0.0, 0.0), 0.0, new Vector(0.2,0.2), 0.0);
     	Kinematic target = new Kinematic(new Vector(10.0, 10.0), 0.0, new Vector(0.0,0.0), 0.0);
     	
         List<Kinematic> obstacles = new ArrayList<Kinematic>() {{
@@ -45,12 +44,12 @@ public class Main_AIFG_Priority_Draw implements DrawListener {
         	add(new Kinematic(new Vector(20,5), 0.0, new Vector(0.3,0.3), 0.0));
         }};
     	
-    	Arrive arrive = new Arrive(character, target, 0.15, 0.40, 0.6, 0.9, 0.7);
-    	CollisionAvoidance ca = new CollisionAvoidance(character,0.15,obstacles,2.0);
+    	Arrive arrive = new Arrive(character, target, 0.15, 0.25, 0.9, 0.5, 0.7);
+    	CollisionAvoidance ca = new CollisionAvoidance(character,0.15,obstacles,1.0);
     	
     	
-    	BehaviorAndWeight baw1 = new BehaviorAndWeight(arrive,2);
-    	BehaviorAndWeight baw2 = new BehaviorAndWeight(ca, 1);
+    	BehaviorAndWeight baw1 = new BehaviorAndWeight(arrive,1);
+    	BehaviorAndWeight baw2 = new BehaviorAndWeight(ca, 2);
     	BehaviorAndWeight[] behaviors = new BehaviorAndWeight[1];
     	BehaviorAndWeight[] behaviors2 = new BehaviorAndWeight[1];
     	behaviors[0] = baw1;
@@ -77,7 +76,7 @@ public class Main_AIFG_Priority_Draw implements DrawListener {
     	for(int i=0; i>=0; i++){
     		Optional<SteeringOutput> steering = priority.getSteering();
     		if(steering.isPresent() && steering.get().getLinear() != null){
-    			character.update(steering.get(), 0.5, 0.7);
+    			character.update(steering.orElse(new SteeringOutput(new Vector(Math.random(),Math.random()), 0)), 0.35, .65);
     			draw.setPenColor(Draw.GREEN);
     			draw.filledCircle(character.getPosition().getDoubleX(),character.getPosition().getDoubleZ(),1);
 //    			System.out.println("Character: "+character.getPosition()+" - Velocity: "+character.getVelocity());

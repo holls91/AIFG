@@ -1,18 +1,17 @@
 package gui;
 
-import gui.util.Draw;
-import gui.util.DrawListener;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import collisionAvoidance.CollisionAvoidance;
 
 import movement.kinematics.Kinematic;
 import movement.vectors.Vector;
 
 import movement.dynamics.SteeringOutput;
+
+import collisionAvoidance.CollisionAvoidance;
+import gui.util.Draw;
+import gui.util.DrawListener;
 
 public class Main_AIFG_Collision_Draw implements DrawListener {
 
@@ -29,17 +28,18 @@ public class Main_AIFG_Collision_Draw implements DrawListener {
     }
     
     public void run() {
-        Kinematic character = new Kinematic(new Vector(0.0, 0.0), 3.0, new Vector(0.2,0.2), 1.0);
+        Kinematic character = new Kinematic(new Vector(0.0, 0.0), 0.0, new Vector(1.5,1), 0.25);
         
         List<Kinematic> targets = new ArrayList<Kinematic>() {{
         	//add(new Kinematic(new Vector(5, 0.0), 0.0, new Vector(0.0,0.0), 0.0));
         	add(new Kinematic(new Vector(0, 10), 0.0, new Vector(0.0,0.0), 0.0));
         	add(new Kinematic(new Vector(5,5), 0.0, new Vector(0.0,0.0), 0.0));
         	add(new Kinematic(new Vector(7,17), 0.0, new Vector(0.0,0.0), 0.0));
-        	add(new Kinematic(new Vector(20,6), 0.0, new Vector(0.0,0.0), 0.0));
+        	add(new Kinematic(new Vector(19,19), 0.0, new Vector(0.0,0.0), 0.0));
+        	add(new Kinematic(new Vector(20,9), 0.0, new Vector(0.0,0.0), 0.0));
         }};
     	
-        CollisionAvoidance ca = new CollisionAvoidance(character,0.15, targets,1.0);
+        CollisionAvoidance ca = new CollisionAvoidance(character,0.35, targets,0.7);
     	
     	draw.setPenColor(Draw.RED);
     	for(Kinematic k: targets) {
@@ -49,7 +49,7 @@ public class Main_AIFG_Collision_Draw implements DrawListener {
     	for(int i=0; i>=0; i++){
     		Optional<SteeringOutput> steering = ca.getSteering();
 //    		if(steering.isPresent()){
-    			character.update(steering.orElse(new SteeringOutput(new Vector(Math.random()+1,Math.random()+1), 0)), 0.5, .65);
+    			character.update(steering.orElse(new SteeringOutput(new Vector(Math.random(),Math.random()), 0)), 0.35, .65);
     			draw.setPenColor(Draw.GREEN);
     			draw.filledCircle(character.getPosition().getDoubleX(),character.getPosition().getDoubleZ(),1);
     			System.out.println("Character: "+character.getPosition()+" - Velocity: "+character.getVelocity());

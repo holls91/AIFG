@@ -3,16 +3,16 @@ package collisionAvoidance;
 import java.util.List;
 import java.util.Optional;
 
-import util.AIFG_Util;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.experimental.ExtensionMethod;
-
 import movement.IDynamicMovement;
 import movement.kinematics.Kinematic;
 import movement.vectors.Vector;
 
 import movement.dynamics.SteeringOutput;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.experimental.ExtensionMethod;
+import util.AIFG_Util;
 
 @AllArgsConstructor
 @Data
@@ -53,9 +53,16 @@ public class CollisionAvoidance implements IDynamicMovement {
 			relativePos = target.getPosition().subtract(character.getPosition());
 			relativeVel = target.getVelocity().subtract(character.getVelocity());
 			relativeSpeed = relativeVel.length();
+			
+			if(relativeSpeed == 0) 
+				continue;
+			
 			// se c'è, il segno "-" nel rigo successivo non è presente nel libro
-			timeToCollision = (relativePos.multiplyDot(relativeVel))/(relativeSpeed*relativeSpeed);
+			timeToCollision = -relativePos.multiplyDot(relativeVel)/(relativeSpeed*relativeSpeed);
 
+			if (timeToCollision <= 0 || timeToCollision >= shortestTime) 
+				continue;
+			
 			// Check if it is going to be a collision at all
 			distance = relativePos.length();
 			minSeparation = distance - relativeSpeed * timeToCollision;
@@ -64,17 +71,13 @@ public class CollisionAvoidance implements IDynamicMovement {
 				continue;
 			}
 
-			// Check if it is the shortest
-			if (timeToCollision > 0 && timeToCollision < shortestTime) {
-System.out.println("devo schivare ("+target.getPosition()+")");
-				// Store the time, target and other data
-				shortestTime = timeToCollision;
-				firstTarget = target;
-				firstMinSeparation = minSeparation;
-				firstDistance = distance;
-				firstRelativePosition = relativePos;
-				firstRelativeVel = relativeVel;
-			}
+			// Store the time, target and other data
+			shortestTime = timeToCollision;
+			firstTarget = target;
+			firstMinSeparation = minSeparation;
+			firstDistance = distance;
+			firstRelativePosition = relativePos;
+			firstRelativeVel = relativeVel;
 		}
 
 		// 2. Calculate the steering
@@ -93,8 +96,8 @@ System.out.println("devo schivare ("+target.getPosition()+")");
 		}
 
 		// Avoid the target
-		relativePos.normalize();
-		Vector linear = relativePos.multiply(maxAcceleration);
+		relativePos = relativePos.normalize();
+		Vector linear = relativePos.multiply(-maxAcceleration);
 
 		return new SteeringOutput(linear, 0).asOptional();
 
