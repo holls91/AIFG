@@ -38,4 +38,18 @@ public class Vector {
 		return "x: "+x+" - y: "+y+" - z: "+z;
 	}
 	
+	
+	public Vector limit(Double limit){
+		return limit2(limit*limit);
+	}
+	
+	private Vector limit2(Double limit2){
+		float len2 = x.floatValue()*x.floatValue()+z.floatValue()*z.floatValue();
+		if(len2 > limit2){
+			x = x.doubleValue()*(float)Math.sqrt(limit2 / len2);
+			z = z.doubleValue()*(float)Math.sqrt(limit2 / len2);
+		}
+		return this;
+	}
+	
 }

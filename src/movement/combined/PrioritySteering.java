@@ -2,12 +2,12 @@ package movement.combined;
 
 import java.util.Optional;
 
-import util.AIFG_Util;
+import movement.dynamics.SteeringOutput;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.ExtensionMethod;
-
-import movement.dynamics.SteeringOutput;
+import util.AIFG_Util;
 
 @Data
 @AllArgsConstructor
@@ -25,7 +25,8 @@ public class PrioritySteering {
 			
 			if(temp.getLinear() != null)
 				//Check if we're above the threshold, if so return
-				if(AIFG_Util.length(temp.getLinear()) > epsilon || Math.abs(temp.getAngular()) > epsilon)
+				if(Math.pow(AIFG_Util.length(temp.getLinear()),2) + Math.pow(temp.getAngular(), 2) > epsilon*epsilon)
+//				if(AIFG_Util.length(temp.getLinear()) > epsilon || Math.abs(temp.getAngular()) > epsilon)
 					return temp.asOptional();	
 		}
 		

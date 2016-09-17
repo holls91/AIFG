@@ -46,12 +46,12 @@ public class Main_AIFG_Blended_Draw implements DrawListener {
     	CollisionAvoidance ca = new CollisionAvoidance(character,0.15,obstacles,1.0);
     	
     	
-    	BehaviorAndWeight baw1 = new BehaviorAndWeight(arrive,1);
-    	BehaviorAndWeight baw2 = new BehaviorAndWeight(ca, 2);
+    	BehaviorAndWeight baw1 = new BehaviorAndWeight(arrive,2);
+    	BehaviorAndWeight baw2 = new BehaviorAndWeight(ca, 1);
     	BehaviorAndWeight[] behaviors = new BehaviorAndWeight[]{baw1,baw2};
     	
     	
-    	BlendedSteering blended = new BlendedSteering(behaviors);
+    	BlendedSteering blended = new BlendedSteering(behaviors, 0.25, 0.25);
     	
     	draw.setPenColor(Draw.BLACK);
     	for(Kinematic c: obstacles) {

@@ -1,10 +1,12 @@
 package movement.kinematics;
 
+import movement.vectors.Vector;
+
+import movement.dynamics.SteeringOutput;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.ExtensionMethod;
-import movement.dynamics.SteeringOutput;
-import movement.vectors.Vector;
 import util.AIFG_Util;
 
 @Data

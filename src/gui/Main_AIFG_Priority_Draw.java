@@ -49,19 +49,19 @@ public class Main_AIFG_Priority_Draw implements DrawListener {
     	
     	
     	BehaviorAndWeight baw1 = new BehaviorAndWeight(arrive,1);
-    	BehaviorAndWeight baw2 = new BehaviorAndWeight(ca, 2);
+    	BehaviorAndWeight baw2 = new BehaviorAndWeight(ca, 1);
     	BehaviorAndWeight[] behaviors = new BehaviorAndWeight[1];
     	BehaviorAndWeight[] behaviors2 = new BehaviorAndWeight[1];
     	behaviors[0] = baw1;
     	behaviors2[0] = baw2;
     	
     	
-    	BlendedSteering blended = new BlendedSteering(behaviors);
-    	BlendedSteering blended2 = new BlendedSteering(behaviors2);
+    	BlendedSteering blended = new BlendedSteering(behaviors, 0.25, 0.25);
+    	BlendedSteering blended2 = new BlendedSteering(behaviors2, 0.25, 0.25);
     	
-    	BlendedSteering[] arrayB = {blended,blended2};
+    	BlendedSteering[] arrayB = {blended, blended2};
     	
-    	PrioritySteering priority = new PrioritySteering(arrayB, 0.05);
+    	PrioritySteering priority = new PrioritySteering(arrayB, 0.001);
     	
     	draw.setPenColor(Draw.BLACK);
     	for(Kinematic c: obstacles) {
@@ -75,17 +75,17 @@ public class Main_AIFG_Priority_Draw implements DrawListener {
     	draw.setPenColor(Draw.GREEN);
     	for(int i=0; i>=0; i++){
     		Optional<SteeringOutput> steering = priority.getSteering();
-    		if(steering.isPresent() && steering.get().getLinear() != null){
+//    		if(steering.isPresent() && steering.get().getLinear() != null){
     			character.update(steering.orElse(new SteeringOutput(new Vector(Math.random(),Math.random()), 0)), 0.35, .65);
     			draw.setPenColor(Draw.GREEN);
     			draw.filledCircle(character.getPosition().getDoubleX(),character.getPosition().getDoubleZ(),1);
 //    			System.out.println("Character: "+character.getPosition()+" - Velocity: "+character.getVelocity());
 //    			System.out.println("Target: "+fpf.getPath().getPosition(fpf.getCurrentParam()));	
-    		}
-    		else{
-//    			System.out.println("Target raggiunto!");
-    			break;
-    		}
+//    		}
+//    		else{
+////    			System.out.println("Target raggiunto!");
+//    			break;
+//    		}
     		draw.show(40);
     		draw.setPenColor(Draw.WHITE);
     		draw.filledCircle(character.getPosition().getDoubleX(),character.getPosition().getDoubleZ(),1.1);

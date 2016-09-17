@@ -2,15 +2,15 @@ package movement.combined;
 
 import java.util.Optional;
 
-import util.AIFG_Util;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.experimental.ExtensionMethod;
-
 import movement.IDynamicMovement;
 import movement.vectors.Vector;
 
 import movement.dynamics.SteeringOutput;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.experimental.ExtensionMethod;
+import util.AIFG_Util;
 
 @Data
 @AllArgsConstructor
@@ -18,6 +18,7 @@ import movement.dynamics.SteeringOutput;
 public class BlendedSteering {
 
 	private BehaviorAndWeight[] behaviors;
+	private Double maxLinearAcceleration, maxAngularAcceleration;
 	
 	public Optional<SteeringOutput> getSteering() {
 		
@@ -39,11 +40,17 @@ public class BlendedSteering {
 			}
 		}
 		
-		if(totalWeight > 0.0){
-			totalWeight = 1.0/totalWeight;
-			linear = AIFG_Util.multiply(linear, totalWeight);
-			angular = angular*totalWeight;
+		if(linear != null)
+			linear = linear.limit(maxLinearAcceleration);
+		if(angular > maxAngularAcceleration){			
+			angular = Math.max(angular, maxAngularAcceleration);
 		}
+		
+//		if(totalWeight > 0.0){
+//			totalWeight = 1.0/totalWeight;
+//			linear = AIFG_Util.multiply(linear, totalWeight);
+//			angular = angular*totalWeight;
+//		}
 		return new SteeringOutput(linear,angular).asOptional();
 	}
 	
